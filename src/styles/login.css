@@ -1,0 +1,32 @@
+/* Reset básico 
+#login-wrapper {
+  width: 100vw;
+  height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+body {
+  background: none !important;
+}
+
+
+#root {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  text-align: left !important;
+}
+
+#login-wrapper input,
+#login-wrapper label,
+#login-wrapper a {
+  all: unset;
+  display: revert;
+  color: revert;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+*/

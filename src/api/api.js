@@ -1,41 +1,42 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 
-// -----------------------------
-//  AXIOS INSTANCE
-// -----------------------------
 const API = axios.create({
   baseURL: "http://127.0.0.1:8000",
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 10000, // evita peticiones colgadas
+  timeout: 10000,
 });
 
-// -----------------------------
-//  REQUEST INTERCEPTOR
-// -----------------------------
 API.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-
 API.interceptors.response.use(
   (response) => response,
 
-  (error) => {
+  async (error) => {
     if (error.response) {
-      if (error.response.status === 401) {
-        console.warn("Token inválido o expirado. Cerrando sesión...");
-        localStorage.removeItem("token");
+      const status = error.response.status;
+
+      if (status === 403) {
+        await Swal.fire({
+          title: "Sesión expirada",
+          text: "Por seguridad debes iniciar sesión nuevamente.",
+          icon: "warning",
+          background: "#0A0F1C",
+          color: "white",
+          confirmButtonColor: "#3085d6",
+          confirmButtonText: "Ir al login",
+        });
+
+        localStorage.clear();
         window.location.href = "/login";
       }
     }

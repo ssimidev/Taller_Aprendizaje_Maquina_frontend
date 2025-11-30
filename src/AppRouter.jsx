@@ -3,8 +3,10 @@ import Login from "./pages/Login";
 import Form from "./pages/Form";
 import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
+import Admin from "./pages/Admin";
+import AdminUser from "./pages/AdminUser";
 
-// --- Protección de rutas (solo si hay JWT) ---
+// Protección de rutas (requiere JWT)
 function PrivateRoute({ children }) {
   const token = localStorage.getItem("token");
   return token ? children : <Navigate to="/" />;
@@ -13,10 +15,7 @@ function PrivateRoute({ children }) {
 export default function AppRouter() {
   return (
     <Routes>
-      {/* PUBLIC ROUTE */}
       <Route path="/" element={<Login />} />
-
-      {/* PRIVATE ROUTES */}
       <Route
         path="/form"
         element={
@@ -25,7 +24,6 @@ export default function AppRouter() {
           </PrivateRoute>
         }
       />
-
       <Route
         path="/dashboard"
         element={
@@ -34,7 +32,6 @@ export default function AppRouter() {
           </PrivateRoute>
         }
       />
-
       <Route
         path="/history"
         element={
@@ -43,8 +40,22 @@ export default function AppRouter() {
           </PrivateRoute>
         }
       />
-
-      {/* ANY UNKNOWN ROUTE */}
+      <Route
+        path="/Admin"
+        element={
+          <PrivateRoute>
+            <Admin />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/AdminUser"
+        element={
+          <PrivateRoute>
+            <AdminUser />
+          </PrivateRoute>
+        }
+      />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
