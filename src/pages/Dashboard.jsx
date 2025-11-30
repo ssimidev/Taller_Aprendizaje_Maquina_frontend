@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import API from "../api/api";
 
-/* ---------------- LOGOUT ---------------- */
 function handleLogout() {
   Swal.fire({
     title: "¿Cerrar sesión?",
